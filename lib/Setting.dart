@@ -10,17 +10,10 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   bool valNotify1 = true;
-  bool valNotify2 = false;
 
-  onChangeFunction1(bool newValue1) {
+  void onChangeFunction1(bool newValue) {
     setState(() {
-      valNotify1 = newValue1;
-    });
-  }
-
-  onChangeFunction2(bool newValue2) {
-    setState(() {
-      valNotify2 = newValue2;
+      valNotify1 = newValue;
     });
   }
 
@@ -62,7 +55,7 @@ class _SettingPageState extends State<SettingPage> {
             SizedBox(height: 40),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -73,14 +66,19 @@ class _SettingPageState extends State<SettingPage> {
                 child: ListView(
                   children: [
                     buildSectionTitle("General"),
-                    buildAccountOption(context, "Language"),
-                    SizedBox(height: 40),
-                    buildSectionTitle("Other"),
                     buildNotificationOption(
-                      "Notification",
+                      "Notifications",
                       valNotify1,
                       onChangeFunction1,
+                      'lib/assets/image 42.png',
                     ),
+                    buildDivider(),
+                    buildAccountOption(context, "Language", 'lib/assets/image 47.png', 'lib/assets/back.png'),
+                    buildDivider(),
+                    buildListTile("Messages", 'lib/assets/image 2.png'),
+                    buildDivider(),
+                    SizedBox(height: 40),
+                    buildSectionTitle("Other"),
                     buildOtherOptions(),
                   ],
                 ),
@@ -98,7 +96,7 @@ class _SettingPageState extends State<SettingPage> {
       child: Text(
         title,
         style: TextStyle(
-          fontSize: 22,
+          fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -108,40 +106,48 @@ class _SettingPageState extends State<SettingPage> {
   Widget buildNotificationOption(
     String title,
     bool value,
-    Function onChangeMethod,
+    Function(bool) onChangeMethod,
+    String imagePath,
   ) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ListTile(
-            title: Text(
-              title,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey[600],
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Image.asset(
+              imagePath,
+              width: 30,
+              height: 30,
+            ),
+            SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                ),
               ),
             ),
-            trailing: Transform.scale(
+            Transform.scale(
               scale: 0.7,
               child: CupertinoSwitch(
                 activeColor: Colors.green,
                 trackColor: Colors.grey,
                 value: value,
-                onChanged: (bool newValue) {
-                  onChangeMethod(newValue);
-                },
+                onChanged: onChangeMethod,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget buildAccountOption(BuildContext context, String title) {
+  Widget buildAccountOption(BuildContext context, String title, String imagePath, String backImagePath) {
     return GestureDetector(
       onTap: () {
         showDialog(
@@ -152,10 +158,10 @@ class _SettingPageState extends State<SettingPage> {
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text("Arabian"),
+                  Text("Arabic"),
                   Text("English"),
-                  Text("Germani"),
-                  Text("Indonesia"),
+                  Text("German"),
+                  Text("Indonesian"),
                   Text("Japanese"),
                   Text("Mandarin"),
                 ],
@@ -165,7 +171,7 @@ class _SettingPageState extends State<SettingPage> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text("close"),
+                  child: Text("Close"),
                 ),
               ],
             );
@@ -177,28 +183,32 @@ class _SettingPageState extends State<SettingPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey[600],
+            Padding(
+              padding: EdgeInsets.only(left: 12),
+              child: Row(
+                children: [
+                  Image.asset(
+                    imagePath,
+                    width: 30,
+                    height: 30,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
               ),
             ),
-            Icon(Icons.arrow_forward_ios, color: Colors.grey),
-              Divider(height: 1, color: Colors.grey),
-          SizedBox(height: 8),
-          Padding(
-            padding: const EdgeInsets.only(left: 50),
-            child: Text(
-              "Messages",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey[600],
-              ),
+            Image.asset(
+              backImagePath,
+              width: 30,
+              height: 30,
             ),
-          ),
           ],
         ),
       ),
@@ -209,10 +219,9 @@ class _SettingPageState extends State<SettingPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        buildListTile("Premium Features", 'lib/assets/image 50.png'),
         buildDivider(),
-        buildListTile("Premium Features"),
-        buildDivider(),
-        buildListTile("Logout"),
+        buildListTile("Logout", 'lib/assets/image 49.png'),
         buildDivider(),
       ],
     );
@@ -222,14 +231,19 @@ class _SettingPageState extends State<SettingPage> {
     return Divider(height: 1, color: Colors.grey);
   }
 
-  Widget buildListTile(String title) {
+  Widget buildListTile(String title, String imagePath) {
     return ListTile(
+      leading: Image.asset(
+        imagePath,
+        width: 30,
+        height: 30,
+      ),
       title: Text(
         title,
         style: TextStyle(
           fontSize: 20,
-          fontWeight: FontWeight.w500,
-          color: Colors.grey[600],
+          fontWeight: FontWeight.w400,
+          color: Colors.black,
         ),
       ),
     );

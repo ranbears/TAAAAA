@@ -86,7 +86,7 @@ class introo extends StatelessWidget {
                           child:Center(
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.blue, // Optional: adds rounded corners
+                              color: Colors.blue, 
                             ),
                             child: TextButton(
                               onPressed: () {

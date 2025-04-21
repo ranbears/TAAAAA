@@ -7,6 +7,10 @@ import 'package:flutter_application_3/Setting.dart';
 import 'package:flutter_application_3/Verification.dart';
 import 'package:flutter_application_3/assets/sign_in.dart';
 import 'package:flutter_application_3/categoris.dart';
+import 'package:flutter_application_3/course.dart';
+import 'package:flutter_application_3/histo.dart';
+import 'package:flutter_application_3/home.dart';
+import 'package:flutter_application_3/profil.dart';
 
 
 
@@ -17,17 +21,18 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        backgroundColor: Color(0xFF04424B),
-        useMaterial3: true,
-      ),
-      home:catego
-      ())
+     initialRoute: '/Home',
+    routes: {
+      '/Home' : (context) => home(),
+      '/History' :(context) => histo(),
+      '/Course' :(context) => kors(),
+      '/Profile' :(context) => profil()
+    },
+    debugShowCheckedModeBanner: false,
+      ) 
     ;
   }
 }
